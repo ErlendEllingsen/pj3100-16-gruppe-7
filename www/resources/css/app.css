@@ -18,6 +18,10 @@ header {
     text-align: center;
 }
 
+section[data-type="state"] {
+    display: none;
+}
+
 /*
  * LOGIN  
  */

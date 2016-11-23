@@ -58,6 +58,7 @@ var Login = function() {
             //If above 4, re-set
             if (self.pin.entry.length >= 4) {
                 //TODO: SUBMIT HERE... 
+                self.pin.validate(self.pin.entry);
                 self.pin.entry = '';
                 $('#fieldInput').val('');
             }
@@ -80,10 +81,27 @@ var Login = function() {
             //end Login.pin.update
         },
         lost: function() {
+
+            //Match state
+            if (state.current != state.states.login) return;
+
             console.log('pin was lost');
             setTimeout(function(){
                 self.displayPIN();
             }, 500);
+        },
+        validate: function(code) {
+
+            //Check code towards test settings PIN 
+            if (code != settings.testPIN) return;
+
+            //Unblur the field 
+            $('#fieldInput').blur();
+
+            //Switch state 
+            state.switch(state.states.loggedin);
+
+            //end login.pin.validate
         }
     };
 

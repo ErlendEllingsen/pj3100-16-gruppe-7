@@ -4,9 +4,10 @@ var Init = function() {
     this.init = function() {
     
         state.init();
+        state.switch(state.states.login);
         login.init();
 
-        state.switch(state.states.login);
+        
 
         //end Init.init
     }

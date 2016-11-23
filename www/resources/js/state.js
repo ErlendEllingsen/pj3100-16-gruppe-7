@@ -6,7 +6,7 @@ var State = function() {
         
         
         $.each($('section[data-state]'), function(index, element){
-            $(element).attr('class', 'display');
+            $(element).css('display', 'none');
         });
 
         //end init 
@@ -29,7 +29,11 @@ var State = function() {
         }
     };
 
+    this.current = self.states.login;
+
     this.switch = function(state) {
+
+        console.log('[state] Switch to ' + state.identifier);
 
         //Call leave-callback for state 
         self.current.callback.leave();
@@ -38,15 +42,15 @@ var State = function() {
         self.current = state; 
 
         //Undisplay and display 
-        $('secton[data-type="state"]').css('display', 'none');
-        $('secton[data-state="' + self.current.identifier + '"]').css('display', 'block'); 
+        $('section[data-type="state"]').css('display', 'none');
+        $('section[data-state="' + self.current.identifier + '"]').css('display', 'block'); 
 
         //Call enter-callback for state
         self.current.callback.enter();
 
     }
 
-    this.current = self.states.login;
+    
 
     //end State
 }
