@@ -57,15 +57,18 @@ var Login = function() {
             
             //If above 4, re-set
             if (self.pin.entry.length >= 4) {
+                //TODO: SUBMIT HERE... 
                 self.pin.entry = '';
                 $('#fieldInput').val('');
             }
 
             //Visualize inputed entries..
+            //Visualise every as dash (not filled)
             $('div[data-type="entry-digit"]').html('' + 
-                '<i style="font-size: 25px;" class="fa fa-circle"></i>'
+                '<i style="font-size: 25px;" class="fa fa-minus"></i>'
             );
             
+            //Visualize as cirlces (filled)
             for (var i = 0; i < self.pin.entry.length; i++) {
                 $('div[data-type="entry-digit"][data-digit="' + (i+1) + '"]').html('' +
                 '<i style="font-size: 25px;" class="fa fa-circle"></i>'
