@@ -1,0 +1,35 @@
+header {
+    padding-top: 5px;
+    display: block;
+    background-color: #0B5454;
+    color: #FFF; 
+    font-size: 25px; 
+    height: 60px;
+    line-height: 60px;
+    text-align: center;
+}
+
+/*
+ * LOGIN  
+ */
+
+section[data-state="login"] div#login_pin_entry {
+    position: fixed;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	z-index: 0;
+}
+
+section[data-state="login"] div#login_pin_entry div.numpad-entry {
+    text-align: center;
+    font-size: 30px;
+    padding: 5px;
+}
+
+section[data-state="login"] div#pinDisplay div.pin-digit {
+    font-size: 50px;
+    color: #0B5454;
+    padding: 15px;
+    text-align: center;
+}

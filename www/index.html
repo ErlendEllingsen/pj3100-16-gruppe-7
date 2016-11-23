@@ -28,11 +28,11 @@
             * Disables use of inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
                 * Enable inline JS: add 'unsafe-inline' to default-src
         -->
-        <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *">
+        <meta http-equiv="Content-Security-Policy" content="default-src * 'self' 'unsafe-inline' gap: ;">
         <meta name="format-detection" content="telephone=no">
         <meta name="msapplication-tap-highlight" content="no">
         <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
-        <link rel="stylesheet" type="text/css" href="css/index.css">
+        
         <title>Hello World</title>
 
         <!-- Load modules --> 
@@ -48,16 +48,94 @@
 
         <!-- Include app resources --> 
         <script src="resources/js/main.js"></script>
-        <script src="resources/js/init.js"></script>
+        <script src="resources/js/settings.js"></script>
         <script src="resources/js/state.js"></script>
+        <script src="resources/js/init.js"></script>
         <script src="resources/js/login.js"></script>
+
+        <link rel="stylesheet" href="resources/css/app.css" type="text/css/" rel="stylesheet">
 
     </head>
     <body>
 
 
+        <!-- HEADER --> 
+        <header>
+            DNB Smart
+        </header>
 
+
+        <!-- MAIN APP CONTENT --> 
+        <main>
+
+            <section data-type="state" data-state="login">
+                login
+
+                <div style="width: 0; height: 0; overflow: hidden; margin-left: -200px;">
+                    <input style="display: block;" onkeyup="login.pin.update();" id="fieldInput" type="number" pattern="\d*"/>
+                </div> 
+
+                <div id="pinDisplay">
+
+                    Skriv inn din PIN 
+                    <br><br> 
+
+                    <!-- PIN DIGITS --> 
+                    <div class="row">
+                        <div data-type="entry-digit" data-digit="1" class="pin-digit col-xs-3">
+                            -
+                        </div>
+                        <div data-type="entry-digit" data-digit="2" class="pin-digit col-xs-3">
+                            -
+                        </div>
+                        <div data-type="entry-digit" data-digit="3" class="pin-digit col-xs-3">
+                            -
+                        </div>
+                        <div data-type="entry-digit" data-digit="4" class="pin-digit col-xs-3">
+                            -
+                        </div>
+                    </div>
+
+                </div>
+
+                <!--
+                <div id="login_pin_entry">
+
+                    <div class="row">
+                        <div data-type="numpad-entry" data-numpad-value="1" class="numpad-entry col-xs-4">1</div>
+                        <div data-type="numpad-entry" data-numpad-value="2" class="numpad-entry col-xs-4">2</div>
+                        <div data-type="numpad-entry" data-numpad-value="3" class="numpad-entry col-xs-4">3</div>
+                    </div>
+
+                    <div class="row">
+                        <div data-type="numpad-entry" data-numpad-value="4" class="numpad-entry col-xs-4">4</div>
+                        <div data-type="numpad-entry" data-numpad-value="5" class="numpad-entry col-xs-4">5</div>
+                        <div data-type="numpad-entry" data-numpad-value="6" class="numpad-entry col-xs-4">6</div>
+                    </div>
+
+                    <div class="row">
+                        <div data-type="numpad-entry" data-numpad-value="7" class="numpad-entry col-xs-4">7</div>
+                        <div data-type="numpad-entry" data-numpad-value="8" class="numpad-entry col-xs-4">8</div>
+                        <div data-type="numpad-entry" data-numpad-value="9" class="numpad-entry col-xs-4">9</div>
+                    </div>
+
+                </div>
+                --> 
+
+                <!-- end state:loggedin -->
+            </section>
+
+            <section data-type="state" data-state="loggedin">
+                loggedin
+                <!-- end state:loggedin -->
+            </section>
+
+            <!-- end main -->
+        </main>
+
+        <!-- CORDOVA --> 
         <script type="text/javascript" src="cordova.js"></script>
-        <script type="text/javascript" src="js/index.js"></script>
+
+        <!-- end body --> 
     </body>
 </html>
