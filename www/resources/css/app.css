@@ -1,7 +1,16 @@
+/*
+ * Fargepallett fra DNB: 
+ * -----------------
+ * DNB Green: 007272
+ * DNB BLACK: 000000
+ * DNB Orange #f47b20
+ * -----------------
+ */
+
 header {
     padding-top: 5px;
     display: block;
-    background-color: #0B5454;
+    background-color: #007272;
     color: #FFF; 
     font-size: 25px; 
     height: 60px;

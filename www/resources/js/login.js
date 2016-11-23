@@ -6,7 +6,7 @@ var Login = function() {
             function() {
 
                 window.plugins.touchid.verifyFingerprint(
-                    'Scan your fingerprint please', // this will be shown in the native scanner popup
+                    'Lås opp ' + settings.name, // this will be shown in the native scanner popup
                     function(msg) {
                         alert('ok: ' + msg)
                     }, // success handler: fingerprint accepted
@@ -27,6 +27,9 @@ var Login = function() {
     }
 
     this.initPin = function() {
+
+    
+
         self.displayPIN();
     }
 
@@ -59,15 +62,25 @@ var Login = function() {
             }
 
             //Visualize inputed entries..
-            $('div[data-type="entry-digit"]').html('-');
+            $('div[data-type="entry-digit"]').html('' + 
+                '<i style="font-size: 25px;" class="fa fa-circle"></i>'
+            );
             
             for (var i = 0; i < self.pin.entry.length; i++) {
-                $('div[data-type="entry-digit"][data-digit="' + (i+1) + '"]').html('*');
+                $('div[data-type="entry-digit"][data-digit="' + (i+1) + '"]').html('' +
+                '<i style="font-size: 25px;" class="fa fa-circle"></i>'
+                );
             }
 
             console.log($('#fieldInput').val());
 
             //end Login.pin.update
+        },
+        lost: function() {
+            console.log('pin was lost');
+            setTimeout(function(){
+                self.displayPIN();
+            }, 500);
         }
     };
 
@@ -82,14 +95,7 @@ var Login = function() {
     }
 
     this.displayPIN = function() {
-
-        
         $('#fieldInput').focus();
-        
-        
-
-
-
         //end Login.displayPIN
     }
 

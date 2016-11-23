@@ -72,7 +72,8 @@
                 login
 
                 <div style="width: 0; height: 0; overflow: hidden; margin-left: -200px;">
-                    <input style="display: block;" onkeyup="login.pin.update();" id="fieldInput" type="number" pattern="\d*"/>
+                    <input tabindex="-1" style="display: block;" onblur="login.pin.lost()" onkeyup="login.pin.update();" id="fieldInput" type="number" pattern="\d*"/>
+                    <div tabindex="-1" style="display: block;" id="fieldInputBackup"> </div>
                 </div> 
 
                 <div id="pinDisplay">

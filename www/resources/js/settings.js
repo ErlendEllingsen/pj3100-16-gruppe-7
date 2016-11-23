@@ -1,6 +1,8 @@
 var Settings = function() {
     var self = this;
 
+    this.name = 'DnB Smart';
+
     this.functionRelease = {
         login: {
             pin: true,
