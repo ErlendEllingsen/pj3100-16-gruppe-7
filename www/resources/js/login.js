@@ -58,7 +58,12 @@ var Login = function() {
             //If above 4, re-set
             if (self.pin.entry.length >= 4) {
                 //TODO: SUBMIT HERE... 
-                self.pin.validate(self.pin.entry);
+                var validationResult = self.pin.validate(self.pin.entry);
+                if (validationResult) return;
+
+                //Vibrate - signal to the user that the code is invaid..
+                navigator.vibrate(1500);
+
                 self.pin.entry = '';
                 $('#fieldInput').val('');
             }
@@ -93,13 +98,20 @@ var Login = function() {
         validate: function(code) {
 
             //Check code towards test settings PIN 
-            if (code != settings.testPIN) return;
+            if (code != settings.testPIN) {
+                $('section[data-type="state"][data-state="login"]')
+                    .find('div[data-type="entry-error"]')
+                    .css('display', 'block');
+
+                return false;
+            }
 
             //Unblur the field 
             $('#fieldInput').blur();
 
             //Switch state 
             state.switch(state.states.loggedin);
+            return true;
 
             //end login.pin.validate
         }

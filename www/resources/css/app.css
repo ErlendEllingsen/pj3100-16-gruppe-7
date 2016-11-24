@@ -46,3 +46,10 @@ section[data-state="login"] div#pinDisplay div.pin-digit {
     padding: 15px;
     text-align: center;
 }
+
+section[data-state="login"] div#pinDisplay div[data-type="entry-error"] {
+    text-align: center;
+    display: none;
+    color: #D9536F;
+    margin: 10px;
+}
