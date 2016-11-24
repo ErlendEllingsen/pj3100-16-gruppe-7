@@ -18,3 +18,10 @@
 * Node & NPM
 * Cordova 
 		
+### Building
+
+* Run `cordova platform add (ios/android)`
+* Run `cordova prepare (ios/android)`
+* Run [`cordova-icon`](https://github.com/AlexDisler/cordova-icon)	
+* Run [`cordova-splash`](https://github.com/AlexDisler/cordova-splash)	
+* Run `cordova run (ios/android) (--device/--emulator)`
