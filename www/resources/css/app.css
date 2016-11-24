@@ -47,6 +47,12 @@ section[data-state="login"] div#pinDisplay div.pin-digit {
     text-align: center;
 }
 
+section[data-state="login"] div#pinDisplay div[data-type="enter-pin-text"] {
+    text-align: center;
+    margin-top: 60px;
+    color: #818181;
+}
+
 section[data-state="login"] div#pinDisplay div[data-type="entry-error"] {
     text-align: center;
     display: none;

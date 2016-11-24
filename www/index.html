@@ -71,8 +71,6 @@
         <main>
 
             <section data-type="state" data-state="login">
-                login
-
                 <div style="width: 0; height: 0; overflow: hidden; margin-left: -200px;">
                     <input tabindex="-1" style="display: block;" onblur="login.pin.lost()" onkeyup="login.pin.update();" id="fieldInput" type="number" pattern="\d*"/>
                     <div tabindex="-1" style="display: block;" id="fieldInputBackup"> </div>
@@ -80,8 +78,10 @@
 
                 <div id="pinDisplay">
 
-                    Skriv inn din PIN 
-                    <br><br> 
+                     
+                    <div data-type="enter-pin-text">
+                        Skriv inn din PIN 
+                    </div>
 
                     <!-- PIN DIGITS --> 
                     <div class="row">
@@ -121,6 +121,7 @@
 
             <section data-type="state" data-state="loggedin">
                 loggedin
+                <img src="https://media.giphy.com/media/DowKEtWnLZcru/giphy.gif" alt="">
                 <!-- end state:loggedin -->
             </section>
 
