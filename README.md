@@ -17,11 +17,16 @@
 ### Prerequisites
 * Node & NPM
 * Cordova 
+* [cordova-icon](https://github.com/AlexDisler/cordova-icon)
+* [cordova-splash](https://github.com/AlexDisler/cordova-splash)
 		
 ### Building
 
 * Run `cordova platform add (ios/android)`
 * Run `cordova prepare (ios/android)`
-* Run [`cordova-icon`](https://github.com/AlexDisler/cordova-icon)	
-* Run [`cordova-splash`](https://github.com/AlexDisler/cordova-splash)	
+* Run [`cordova-icon`](https://github.com/AlexDisler/cordova-icon)	 (Must be installed)
+* Run [`cordova-splash`](https://github.com/AlexDisler/cordova-splash) (Must be installed)	
 * Run `cordova run (ios/android) (--device/--emulator)`
+
+## About 
+Group project at Westerdals.
