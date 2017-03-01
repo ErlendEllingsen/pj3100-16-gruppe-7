@@ -59,7 +59,10 @@ var Login = function() {
             if (self.pin.entry.length >= 4) {
                 //TODO: SUBMIT HERE... 
                 var validationResult = self.pin.validate(self.pin.entry);
-                if (validationResult) return;
+                if (validationResult) {
+                    self.status.success();
+                    return;
+                }
 
                 //Vibrate - signal to the user that the code is invaid..
                 navigator.vibrate(1500);
@@ -106,11 +109,7 @@ var Login = function() {
                 return false;
             }
 
-            //Unblur the field 
-            $('#fieldInput').blur();
-
-            //Switch state 
-            state.switch(state.states.loggedin);
+            
             return true;
 
             //end login.pin.validate
@@ -120,6 +119,42 @@ var Login = function() {
     this.status = {};
 
     this.status.success = function() {
+
+        //Unblur the field 
+        $('#fieldInput').blur();
+
+        //Switch state 
+        state.switch(state.states.loggedin);
+
+        //Add tab bar 
+        //Initialize the tabbar
+        var tabbar = new AppTabBar.Tabbar('tab_bar', {
+            color: '#000', 
+			background_color: '#FFF',
+            tab_selected_style: {
+                color: '#0C605E', 
+			    background_color: '#FFF',
+            }
+        });
+        tabbar.init();
+
+        //Add tabs
+        var tab_home = tabbar.addTab('Home', '<i class="fa fa-home"></i>', {
+            events: {
+                selected: function(){
+                    
+                }
+            }
+        });
+
+        var tab_pages = tabbar.addTab('Pages', '<i class="fa fa-home"></i>');
+
+        //Render the tabbar.
+        tabbar.render();
+
+        //Set "home" as active.
+        tabbar.selectTab(tab_home);
+
 
     }
 

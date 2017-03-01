@@ -7,6 +7,10 @@ var Init = function() {
         state.switch(state.states.login);
         login.init();
 
+
+
+       
+
         
 
         //end Init.init
