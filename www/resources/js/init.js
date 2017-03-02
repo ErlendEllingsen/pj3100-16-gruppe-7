@@ -17,9 +17,6 @@ var Init = function() {
             //end deviceUuid set
         }
        
-
-        
-
         //end Init.init
     }
 

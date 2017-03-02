@@ -53,6 +53,9 @@
         <link rel="stylesheet" href="resources/plugins/app-tab-bar/tabbar.css">
         <script src="resources/plugins/app-tab-bar/tabbar.js"></script>
 
+        <!-- Circles --> 
+        <script src="resources/plugins/circles/circles.js"></script>
+
         <!-- Include app resources --> 
         <script src="resources/js/main.js"></script>
         <script src="resources/js/settings.js"></script>
@@ -63,6 +66,20 @@
         <script src="resources/js/device.js"></script>
 
         <link rel="stylesheet" href="resources/css/app.css" type="text/css/" rel="stylesheet">
+
+        <!-- TODO: REMOVE --> 
+        <style>
+            .circles-text {
+                position: absolute;
+                top: 0px;
+                left: 0px;
+                text-align: center;
+                width: 100%;
+                font-size: 18px;
+                padding-top: 35px;
+                height: 120px;
+            }
+        </style>
 
     </head>
     <body>
@@ -127,9 +144,55 @@
             </section>
 
             <section data-type="state" data-state="loggedin">
-                loggedin
-                <h1>Logged in!</h1>
                 
+                <div style="text-align: center;">
+                    <img src="./resources/images/icon.png" alt="App logo" style="width: 150px; height: 150px;">
+                </div>
+
+                <div>
+
+                    <div class="container-fluid">
+                    
+                        <div class="row" style="border: 1px solid #888B8D;">
+
+                            <div class="col-xs-6" style="text-align: center; font-size: 14px; padding: 20px; border-right: 1px solid #888B8D;">
+                                
+                                Dagsbudsjett<br>
+
+                                <span style="font-size: 24px;">
+                                    250kr
+                                </span>
+
+                            </div>
+                            <div class="col-xs-6" style="text-align: center; font-size: 14px; padding: 20px;">
+                                Disponibelt Saldo<br> 
+
+                                <span style="font-size: 24px;">
+                                    3244kr
+                                </span>
+
+                            </div>
+
+                            <!-- end row --> 
+                        </div>
+
+                        <div class="row">
+
+                            <div class="col-xs-12">
+                                
+                                <div style="text-align: center;">Gjenstående av dagsbudsjett</div>
+                                
+                                <div class="circle" id="circle-daily-budget-remainder"></div> 
+
+                                
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
 
                 <div id="tab_bar">
                     <!-- AUTO GENERATED CONTENT --> 

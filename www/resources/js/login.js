@@ -149,12 +149,33 @@ var Login = function() {
 
         var tab_pages = tabbar.addTab('Pages', '<i class="fa fa-home"></i>');
 
+
         //Render the tabbar.
         tabbar.render();
 
+        //Test circle 
+
+        var myCircle = Circles.create({
+            id:                  'circle-daily-budget-remainder',
+            radius:              60,
+            value:               43,
+            maxValue:            100,
+            width:               10,
+            text:                function(value){
+                return '<strong>' + value + '%</strong><br>test';
+            },
+            colors:              ['rgba(12, 96, 94, 0.4)', '#0C605E'],
+            duration:            400,
+            wrpClass:            'circles-wrp',
+            textClass:           'circles-text',
+            valueStrokeClass:    'circles-valueStroke',
+            maxValueStrokeClass: 'circles-maxValueStroke',
+            styleWrapper:        true,
+            styleText:           false
+        });
+
         //Set "home" as active.
         tabbar.selectTab(tab_home);
-
 
     }
 
