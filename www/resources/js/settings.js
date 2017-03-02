@@ -8,7 +8,7 @@ var Settings = function() {
     this.functionRelease = {
         login: {
             pin: true,
-            touchid: false
+            touchid: true
         }
     };    
 

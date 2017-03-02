@@ -8,10 +8,18 @@ var Login = function() {
                 window.plugins.touchid.verifyFingerprint(
                     'Lås opp ' + settings.name, // this will be shown in the native scanner popup
                     function(msg) {
-                        alert('ok: ' + msg)
+                        //alert('ok: ' + msg)
+
+                        self.status.success();
+                        console.log('touchid: ok: ' + msg);
+
                     }, // success handler: fingerprint accepted
                     function(msg) {
-                        alert('not ok: ' + JSON.stringify(msg))
+
+                        //Error occured, fall back to PIN.
+                        self.initPin();
+
+                        console.log('touchid: not ok: ' + JSON.stringify(msg))
                     } // error handler with errorcode and localised reason
                 );
 
@@ -128,18 +136,19 @@ var Login = function() {
 
         //Add tab bar 
         //Initialize the tabbar
-        var tabbar = new AppTabBar.Tabbar('tab_bar', {
+        main.tabbar = new AppTabBar.Tabbar('tab_bar', {
             color: '#000', 
 			background_color: '#FFF',
+            font_size: '14px',
             tab_selected_style: {
                 color: '#0C605E', 
 			    background_color: '#FFF',
             }
         });
-        tabbar.init();
+        main.tabbar.init();
 
         //Add tabs
-        var tab_home = tabbar.addTab('Home', '<i class="fa fa-home"></i>', {
+        main.tab_home = main.tabbar.addTab('Oversikt', '<i class="fa fa-bar-chart"></i>', {
             events: {
                 selected: function(){
                     
@@ -147,35 +156,45 @@ var Login = function() {
             }
         });
 
-        var tab_pages = tabbar.addTab('Pages', '<i class="fa fa-home"></i>');
+        main.tab_pages = main.tabbar.addTab('Sparing', '<i class="fa fa-bank"></i>');
+        main.tab_calendar = main.tabbar.addTab('Kalender', '<i class="fa fa-calendar"></i>');
+        main.tab_event = main.tabbar.addTab('Event', '<i class="fa fa-birthday-cake"></i>');
 
 
         //Render the tabbar.
-        tabbar.render();
+        main.tabbar.render();
 
         //Test circle 
+        $.get('./views/main.html', function(data){
 
-        var myCircle = Circles.create({
-            id:                  'circle-daily-budget-remainder',
-            radius:              60,
-            value:               43,
-            maxValue:            100,
-            width:               10,
-            text:                function(value){
-                return '<strong>' + value + '%</strong><br>test';
-            },
-            colors:              ['rgba(12, 96, 94, 0.4)', '#0C605E'],
-            duration:            400,
-            wrpClass:            'circles-wrp',
-            textClass:           'circles-text',
-            valueStrokeClass:    'circles-valueStroke',
-            maxValueStrokeClass: 'circles-maxValueStroke',
-            styleWrapper:        true,
-            styleText:           false
+            $('section#loggedin-page').html(data);
+
+            var myCircle = Circles.create({
+                id:                  'circle-daily-budget-remainder',
+                radius:              60,
+                value:               43,
+                maxValue:            100,
+                width:               10,
+                text:                function(value){
+                    return '<strong>' + value + '%</strong><br>test';
+                },
+                colors:              ['rgba(12, 96, 94, 0.4)', '#0C605E'],
+                duration:            400,
+                wrpClass:            'circles-wrp',
+                textClass:           'circles-text',
+                valueStrokeClass:    'circles-valueStroke',
+                maxValueStrokeClass: 'circles-maxValueStroke',
+                styleWrapper:        true,
+                styleText:           false
+            });
+
+            //end get views/main
         });
 
+        
+
         //Set "home" as active.
-        tabbar.selectTab(tab_home);
+        main.tabbar.selectTab(tab_home);
 
     }
 
