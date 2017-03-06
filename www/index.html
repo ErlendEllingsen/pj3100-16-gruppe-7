@@ -49,6 +49,10 @@
         <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.css" type="text/css">
 
         <!-- Plugins --> 
+
+        <!-- pull-to-reload --> 
+        <script src="node_modules/pull-to-reload/pull-to-reload.js"></script>
+
         <!-- App-tab-bar -->
         <link rel="stylesheet" href="resources/plugins/app-tab-bar/tabbar.css">
         <script src="resources/plugins/app-tab-bar/tabbar.js"></script>
@@ -67,7 +71,8 @@
 
         <link rel="stylesheet" href="resources/css/app.css" type="text/css/" rel="stylesheet">
 
-        <!-- TODO: REMOVE --> 
+
+        <!-- TODO: Implement in CSS  --> 
         <style>
             .circles-text {
                 position: absolute;
@@ -143,8 +148,8 @@
                 <!-- end state:loggedin -->
             </section>
 
-            <section data-type="state" data-state="loggedin">
-                
+            <div data-type="state" data-state="loggedin">
+
                 <section id="loggedin-page" data-role="loggedin-page">
                     <!-- Dynamically replaced --> 
                     <!-- //loggedin-page --> 
@@ -157,7 +162,7 @@
                 </div>
 
                 <!-- end state:loggedin -->
-            </section>
+            </div>
 
             <!-- end main -->
         </main>
@@ -166,5 +171,6 @@
         <script type="text/javascript" src="cordova.js"></script>
 
         <!-- end body --> 
+
     </body>
 </html>

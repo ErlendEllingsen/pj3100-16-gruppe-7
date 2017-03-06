@@ -134,67 +134,9 @@ var Login = function() {
         //Switch state 
         state.switch(state.states.loggedin);
 
-        //Add tab bar 
-        //Initialize the tabbar
-        main.tabbar = new AppTabBar.Tabbar('tab_bar', {
-            color: '#000', 
-			background_color: '#FFF',
-            font_size: '14px',
-            tab_selected_style: {
-                color: '#0C605E', 
-			    background_color: '#FFF',
-            }
-        });
-        main.tabbar.init();
-
-        //Add tabs
-        main.tab_home = main.tabbar.addTab('Oversikt', '<i class="fa fa-bar-chart"></i>', {
-            events: {
-                selected: function(){
-                    
-                }
-            }
-        });
-
-        main.tab_pages = main.tabbar.addTab('Sparing', '<i class="fa fa-bank"></i>');
-        main.tab_calendar = main.tabbar.addTab('Kalender', '<i class="fa fa-calendar"></i>');
-        main.tab_event = main.tabbar.addTab('Event', '<i class="fa fa-birthday-cake"></i>');
-
-
-        //Render the tabbar.
-        main.tabbar.render();
-
-        //Test circle 
-        $.get('./views/main.html', function(data){
-
-            $('section#loggedin-page').html(data);
-
-            var myCircle = Circles.create({
-                id:                  'circle-daily-budget-remainder',
-                radius:              60,
-                value:               43,
-                maxValue:            100,
-                width:               10,
-                text:                function(value){
-                    return '<strong>' + value + '%</strong><br>test';
-                },
-                colors:              ['rgba(12, 96, 94, 0.4)', '#0C605E'],
-                duration:            400,
-                wrpClass:            'circles-wrp',
-                textClass:           'circles-text',
-                valueStrokeClass:    'circles-valueStroke',
-                maxValueStrokeClass: 'circles-maxValueStroke',
-                styleWrapper:        true,
-                styleText:           false
-            });
-
-            //end get views/main
-        });
-
+        main.loggedIn();
         
-
-        //Set "home" as active.
-        main.tabbar.selectTab(tab_home);
+        
 
     }
 
