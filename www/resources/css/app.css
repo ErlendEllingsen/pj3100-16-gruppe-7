@@ -7,15 +7,27 @@
  * -----------------
  */
 
-header {
+::-webkit-scrollbar { 
+    display: none; 
+}
+
+
+div#header {
+    width: 100%;
+    position: fixed;
     padding-top: 5px;
-    display: block;
+    display: fixed;
     background-color: #007272;
     color: #FFF; 
     font-size: 25px; 
     height: 60px;
     line-height: 60px;
     text-align: center;
+    z-index: 100;
+}
+
+div#header-spacer {
+    height: 60px;
 }
 
 section[data-type="state"] {

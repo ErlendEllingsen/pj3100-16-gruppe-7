@@ -61,6 +61,7 @@
         <script src="resources/plugins/circles/circles.js"></script>
 
         <!-- Include app resources --> 
+        <script src="resources/js/config.js"></script>
         <script src="resources/js/main.js"></script>
         <script src="resources/js/settings.js"></script>
         <script src="resources/js/state.js"></script>
@@ -84,6 +85,20 @@
                 padding-top: 35px;
                 height: 120px;
             }
+
+            .circles-text-sum {
+                margin-top: -50px;
+                font-size: 18px;
+                text-align: center;
+            }
+
+            .circles-text-percentage {
+                margin-top: -90px;
+                font-size: 22px;
+                color: #0F4F4C;
+                font-weight: bold;
+            }
+
         </style>
 
     </head>
@@ -91,9 +106,11 @@
 
 
         <!-- HEADER --> 
-        <header>
+        <div id="header">
             DNB Smart
-        </header>
+        </div>
+
+        <div id="header-spacer"></div>
 
 
         <!-- MAIN APP CONTENT --> 
@@ -149,6 +166,8 @@
             </section>
 
             <div data-type="state" data-state="loggedin">
+
+                
 
                 <section id="loggedin-page" data-role="loggedin-page">
                     <!-- Dynamically replaced --> 
