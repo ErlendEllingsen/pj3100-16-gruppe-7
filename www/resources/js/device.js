@@ -1,6 +1,8 @@
 var Device = function() {
 
-    this.uuid = null; 
+    this.token = null; 
+    this.nameFirst = null;
+    this.nameLast = null;
 
     //end Device
 }

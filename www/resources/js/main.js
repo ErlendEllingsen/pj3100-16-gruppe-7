@@ -13,6 +13,86 @@ var Main = function () {
 
 var main = new Main();
 
+main.init = {};
+
+
+main.init.detectStatus = function() {
+
+    var deviceUuid = localStorage.getItem('pj3100_token');
+    if (deviceUuid == undefined || deviceUuid == null) {
+        main.init.newDevice();
+        //end deviceUuid not set 
+    } else {
+        main.init.existingDevice(); 
+        //end deviceUuid set
+    }
+
+}
+
+main.init.existingDevice = function() {
+
+    device.uuid = localStorage.getItem('pj3100_token');
+
+    console.log('Device uuid is set to ' + device.uuid);
+
+    //end Init.existingDevice
+}
+
+main.init.newDevice = function() {
+    var uuid = tools.uuid();
+
+    navigator.notification.prompt('Dev: token', function(input_token){
+
+        navigator.notification.prompt('Dev: fornavn', function(input_firstName){
+            
+            navigator.notification.prompt('Dev: etternavn', function(input_lastName){
+
+                //Set device vars.. 
+                device.token = input_token.input1;
+                device.nameFirst = input_firstName.input1;
+                device.nameLast = input_lastName.input1;
+
+                main.init.registerDevice();
+
+                //end input-last name
+            }, 'Setup');
+
+            //end input-first name
+        }, 'Setup');
+
+        //end input-token
+    }, 'Setup');
+
+    //localStorage.setItem('pj3100_token', uuid);
+    
+
+    main.init.existingDevice(); //We can now load the device...
+    //end Init.newDevice 
+}
+
+main.init.registerDevice = function() {
+
+    tools.request({
+        url: config.endpoint + 'device/register',
+        type: "POST",
+        data: {
+            token: device.token,
+            nameFirst: device.nameFirst,
+            nameLast: device.nameLast
+        },
+			
+    }, {
+        requireToken: false
+    }, function (data, headers) {
+        alert(JSON.stringify(data));
+    }, function(errObj){
+        alert(JSON.stringify(errObj));
+    });
+
+    //end init.registerDevice 
+}
+
+
 
 main.setPage = function (page, callback) {
 
@@ -27,6 +107,8 @@ main.setPage = function (page, callback) {
 
 
 main.loggedIn = function () {
+
+    main.init.detectStatus();
 
 
     //Add tab bar 
