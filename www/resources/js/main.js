@@ -31,7 +31,7 @@ main.init.detectStatus = function() {
 
 main.init.existingDevice = function() {
 
-    device.uuid = localStorage.getItem('pj3100_token');
+    device.token = localStorage.getItem('pj3100_token');
 
     //Set config from device
     config.token = device.token; 
@@ -275,7 +275,7 @@ main.accountData.freshData = function(data) {
     var myCircle = Circles.create({
         id: 'circle-daily-budget-remainder',
         radius: 60,
-        value: percentage,
+        value: (100 - percentage),
         maxValue: 100,
         width: 10,
         text: function (value) {
@@ -283,7 +283,7 @@ main.accountData.freshData = function(data) {
                 '<div class="circles-text-sum">' + remainder + ',-</div>' +
                 '<div class="circles-text-percentage">' + percentage + '%</div>';
         },
-        colors: ['rgba(12, 96, 94, 1)', 'rgba(23, 177, 175, 1)'],
+        colors: ['rgba(23, 177, 175, 1)', 'rgba(12, 96, 94, 1)'],
         duration: 400,
         wrpClass: 'circles-wrp',
         textClass: 'circles-text',
