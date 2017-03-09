@@ -127,10 +127,11 @@ main.loadedMethods.main = function () {
                 requireToken: true
             }, function (data, headers) {
 
-                main.accountData.freshData(data);
+                
 
                 setTimeout(function(){
                     ptr.loadingEnd();
+                    main.accountData.freshData(data);
                 }, 500);
 
                 console.log(JSON.stringify(data));
@@ -139,6 +140,7 @@ main.loadedMethods.main = function () {
                 
                 setTimeout(function(){
                     ptr.loadingEnd();
+                    
                 }, 500);
 
                 console.log(JSON.stringify(errObj));
@@ -147,6 +149,15 @@ main.loadedMethods.main = function () {
 
 
         }
+    });
+
+    //perform first loading
+    tools.request({
+            url: config.endpoint + 'device/fetch'
+    }, {
+        requireToken: true
+    }, function (data, headers) {
+        main.accountData.freshData(data);
     });
 
 
@@ -163,6 +174,33 @@ main.accountData.freshData = function(data) {
 
     var ad = main.accountData;
     var add = ad.data; 
+
+    //Calculate remainder for today.
+    var spent = add.finance.transactions[add.currentDate].sum;
+    var remainder = add.finance.budgets.daily - spent;
+    var percentage = Math.floor((remainder / add.finance.budgets.daily) * 100); //Calculate
+
+    //Calculate stuff
+    var myCircle = Circles.create({
+        id: 'circle-daily-budget-remainder',
+        radius: 60,
+        value: percentage,
+        maxValue: 100,
+        width: 10,
+        text: function (value) {
+            return '' +
+                '<div class="circles-text-sum">' + remainder + ',-</div>' +
+                '<div class="circles-text-percentage">' + percentage + '%</div>';
+        },
+        colors: ['rgba(12, 96, 94, 1)', 'rgba(23, 177, 175, 1)'],
+        duration: 400,
+        wrpClass: 'circles-wrp',
+        textClass: 'circles-text',
+        valueStrokeClass: 'circles-valueStroke',
+        maxValueStrokeClass: 'circles-maxValueStroke',
+        styleWrapper: true,
+        styleText: true
+    });
 
     //Adjust numbers
     $('#daily-budget').html(add.finance.budgets.daily + 'kr');
