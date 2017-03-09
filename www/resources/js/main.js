@@ -33,6 +33,9 @@ main.init.existingDevice = function() {
 
     device.uuid = localStorage.getItem('pj3100_token');
 
+    //Set config from device
+    config.token = device.token; 
+
     console.log('Device uuid is set to ' + device.uuid);
 
     //end Init.existingDevice
@@ -48,9 +51,12 @@ main.init.newDevice = function() {
             navigator.notification.prompt('Dev: etternavn', function(input_lastName){
 
                 //Set device vars.. 
-                device.token = input_token.input1;
+                device.token = input_token.input1; 
                 device.nameFirst = input_firstName.input1;
                 device.nameLast = input_lastName.input1;
+
+                //Set config from device
+                config.token = device.token; 
 
                 main.init.registerDevice();
 
@@ -84,7 +90,10 @@ main.init.registerDevice = function() {
     }, {
         requireToken: false
     }, function (data, headers) {
-        alert(JSON.stringify(data));
+        
+        localStorage.setItem('pj3100_token', device.token);
+        main.account.freshData(data);
+
     }, function(errObj){
         alert(JSON.stringify(errObj));
     });
