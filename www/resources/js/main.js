@@ -7,7 +7,7 @@ var Main = function () {
     this.tab_home = null;
     this.tab_pages = null;
     this.tab_calendar = null;
-    this.tab_event = null;
+    this.tab_settings = null;
 
 }
 
@@ -156,10 +156,10 @@ main.loggedIn = function () {
             }
         }
     });
-    main.tab_event = main.tabbar.addTab('Event', '<i class="fa fa-birthday-cake"></i>', {
+    main.tab_settings = main.tabbar.addTab('Instillinger', '<i class="fa fa-cogs"></i>', {
         events: {
             selected: function () {
-                main.setPage('event', main.loadedMethods.event);
+                main.setPage('settings', main.loadedMethods.settings);
             }
         }
     });
@@ -271,7 +271,7 @@ main.accountData.freshData = function(data) {
     var remainder = add.finance.budgets.daily - spent;
     var percentage = Math.floor((remainder / add.finance.budgets.daily) * 100); //Calculate
 
-    //Calculate stuff
+    //Calculate circle values.
     var myCircle = Circles.create({
         id: 'circle-daily-budget-remainder',
         radius: 60,
@@ -297,6 +297,12 @@ main.accountData.freshData = function(data) {
     $('#daily-budget').html(add.finance.budgets.daily + 'kr');
     $('#saldo').html(add.finance.accounts.default + 'kr');
 
+    //Set name 
+    $('#userFullName').html(add.name_first + ' ' + add.name_last);
+
+    //--- Process savings ---
+
+
     //end main.accountData.freshData
 }
 
@@ -304,7 +310,32 @@ main.accountData.freshData = function(data) {
 
 main.loadedMethods.savings = function () {
 
+    var ad = main.accountData;
+    var add = ad.data; //add = account data (DATA)
 
+    $('#savingsContainer').html('');
+
+    for (var prop in add.finance.accounts.savings) {
+
+        var account = add.finance.accounts.savings[prop];
+        $('#savingsContainer').append('' +
+        '<div class="panel panel-default">' +
+        '    <div class="panel-heading">' +
+        '        <h3 style="padding: 0px; margin: 0px;">' + prop + '</h3>' +
+        '    </div>' +
+        '    <div class="panel-body">' +
+        '        <div class="row" style="font-size: 20px;">' +
+        '            <div class="col-xs-5" style="text-align: center; color: rgb(27, 140, 139)">' + account.balance + '</div>' +
+        '            <div class="col-xs-2" style=" text-align: center; color: black;">/</div>' +
+        '            <div class="col-xs-5" style="text-align: center; color: gray">' + account.goal + '</div>' +
+        '        </div>' +
+        '    </div>' +
+        '</div>' + 
+        '');
+
+    }
+
+    
 
     //end loadedMethods.savings
 }
@@ -312,13 +343,43 @@ main.loadedMethods.savings = function () {
 main.loadedMethods.calendar = function () {
 
 
+    calendar.init();
+
 
     //end loadedMethods.calendar
 }
 
-main.loadedMethods.event = function () {
+main.loadedMethods.settings = function () {
 
+    var ad = main.accountData;
+    var add = ad.data; //add = account data (DATA)
 
+    $('#settings_savingsAccounts').html('');
 
-    //end loadedMethods.event
+    
+    for (var prop in add.finance.accounts.savings) {
+
+        var account = add.finance.accounts.savings[prop];
+
+        $('#settings_savingsAccounts').append('' +
+        '<div class="row" style="margin-top: 5px; margin-bottom: 5px;">' +
+            '<div class="col-xs-8">' +
+                prop +
+            '</div>' +
+            '<div class="col-xs-4">' +
+                '<input type="checkbox" checked data-toggle="toggle" class="settingsToggle">' +
+            '</div>' +
+        '</div>');
+
+    }
+
+    $('.settingsToggle').bootstrapToggle({
+        on: '',
+        off: '',
+        style: 'dnb'
+    });
+
+    //$('#btnBtn').bootstrapToggle();
+
+    //end loadedMethods.settings
 }

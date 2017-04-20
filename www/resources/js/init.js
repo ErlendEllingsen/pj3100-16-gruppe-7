@@ -5,14 +5,21 @@ var Init = function() {
     
         
 
-
+        FastClick.attach(document.body);
         
        
 
         //SET STATES ETC 
         state.init();
         state.switch(state.states.login);
-        login.init();
+        
+
+        if (config.devmode) {
+            console.log('devmode: logging in...');
+            login.status.success(); //Auto-login
+        } else if (config.devmode == false) { 
+            login.init();
+        }
 
         //end Init.init
     }
