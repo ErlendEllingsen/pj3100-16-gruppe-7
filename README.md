@@ -1,11 +1,11 @@
 # pj3100-16-gruppe-7
-##DnB Smart 
+## DnB Smart 
 
 
 ## Participants 
 
-* Erlend Ellingsen
 * Joakim Engen Jacobsen
+* Erlend Ellingsen
 * Halifa **Baboucarr** Jeng
 * Ralpf **Laurent** Fajardo
 * Sophie Parker 
