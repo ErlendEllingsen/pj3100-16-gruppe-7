@@ -356,7 +356,7 @@ main.loadedMethods.settings = function () {
 
     $('#settings_savingsAccounts').html('');
 
-    
+    var i = 0;
     for (var prop in add.finance.accounts.savings) {
 
         var account = add.finance.accounts.savings[prop];
@@ -367,16 +367,40 @@ main.loadedMethods.settings = function () {
                 prop +
             '</div>' +
             '<div class="col-xs-4">' +
-                '<input type="checkbox" checked data-toggle="toggle" class="settingsToggle">' +
+                '<input type="checkbox" ' + (i == 0 ? 'checked' : '') + ' data-toggle="toggle" class="settingsToggle" data-account="' + prop + '">' +
             '</div>' +
         '</div>');
 
+        i++;
     }
 
     $('.settingsToggle').bootstrapToggle({
         on: '',
         off: '',
         style: 'dnb'
+    });
+
+    var settingsUpdateBlockToggle = false;
+
+    $('.settingsToggle').on('change', function(event){
+        var sender = this;
+
+        if (settingsUpdateBlockToggle) {
+            console.log('blockToggle ~ returning');
+            return;
+        }
+
+        settingsUpdateBlockToggle = true; 
+
+        $('.settingsToggle').bootstrapToggle('off');
+        $(this).bootstrapToggle('on');
+
+        settingsUpdateBlockToggle = false; 
+
+
+        //$('.settingsToggle').bootstrapToggle('off');
+        //$(sender).bootstrapToggle('on');
+
     });
 
     //$('#btnBtn').bootstrapToggle();
