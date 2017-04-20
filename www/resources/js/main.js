@@ -92,7 +92,7 @@ main.init.registerDevice = function() {
     }, function (data, headers) {
         
         localStorage.setItem('pj3100_token', device.token);
-        main.account.freshData(data);
+        main.account.freshData(data.client);
 
     }, function(errObj){
         alert(JSON.stringify(errObj));
@@ -367,7 +367,7 @@ main.loadedMethods.settings = function () {
                 prop +
             '</div>' +
             '<div class="col-xs-4">' +
-                '<input type="checkbox" ' + (i == 0 ? 'checked' : '') + ' data-toggle="toggle" class="settingsToggle" data-account="' + prop + '">' +
+                '<input type="checkbox" data-toggle="toggle" class="settingsToggle" data-account="' + prop + '">' +
             '</div>' +
         '</div>');
 
@@ -397,13 +397,41 @@ main.loadedMethods.settings = function () {
 
         settingsUpdateBlockToggle = false; 
 
+        //--- Register update server side --
+        tools.request({
+            url: config.endpoint + 'device/update/activeSavingsAccount',
+            type: "POST",
+            data: {
+                account: $(this).attr('data-account')
+            },
+                
+        }, {
+            requireToken: false
+        }, function (data, headers) {
+
+            if (data.status == false) {
+                navigator.notification.alert('An error occured.', function(){
+                }, 'Error');
+                return;
+            }
+
+            main.accountData.freshData(data.client);
+
+        }, function(errObj){
+            navigator.notification.alert('An error occured.', function(){
+            }, 'Error');
+            return;
+        });
 
         //$('.settingsToggle').bootstrapToggle('off');
         //$(sender).bootstrapToggle('on');
 
     });
 
-    //$('#btnBtn').bootstrapToggle();
+   //--- INIT TOGGLE ---
+   //savings_activeAccount
+   console.log('Setting account active: ' + add.finance.accounts.savings_activeAccount);
+   settings.settingSetSavingsAccountActive(add.finance.accounts.savings_activeAccount);
 
     //end loadedMethods.settings
 }

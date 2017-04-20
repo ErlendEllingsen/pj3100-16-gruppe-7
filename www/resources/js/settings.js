@@ -27,15 +27,22 @@ var Settings = function() {
     }
 
     this.load = function() {
-        self.user.transferToAccount = self.getSettingProp('app_setting_transferToAccount');
+        //Stored server side || self.user.transferToAccount = self.getSettingProp('app_setting_transferToAccount');
         //end settings.load
     }
 
     this.save = function() {
-        localStorage.setItem('app_setting_transferToAccount', self.user.transferToAccount);
+        //Stored server side || localStorage.setItem('app_setting_transferToAccount', self.user.transferToAccount);
         //end settings.save
     }
 
+    //--- SETTINGS PAGE ---
+    this.settingSetSavingsAccountActive = function(name) {
+
+        $('.settingsToggle[data-account="' + name + '"]').bootstrapToggle('on');
+
+        //end settings.settingSetSavingsAccountActive
+    }
 
     //end Settings 
 }
