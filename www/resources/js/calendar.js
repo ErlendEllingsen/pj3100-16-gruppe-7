@@ -1,7 +1,21 @@
 var calendar = {};
 
+// --- VARS ---- 
 calendar.colors = {};
 calendar.colors.today = '007272';
+
+// --- VIEW ----
+calendar.view = 'main'; //['main', 'create-event']
+calendar.setView = function(view) {
+
+    $('section[data-view="' + calendar.view + '"]').css('display', 'none');
+    calendar.view = view;
+    $('section[data-view="' + calendar.view + '"]').css('display', 'block');
+
+    //end .setView
+}
+
+
 
 //Calendar: Date
 
@@ -39,10 +53,10 @@ calendar.event.getObject = function() {
     '<div class="panel panel-default calendarDateBlockItem">' +
         '<div class="row">' +
             '<div class="col-xs-8">' +
-                '<h3>Hyttetur med GuTTTAAA</h3>' +
-                'Lorem ipsum dolor sit amet' +
+                '<h3>Coachella🎉☀️</h3>' +
+                'Trip to the US and Coachella' +
             '</div>' +
-            '<div class="col-xs-4 eventBudget">34 000,-</div>' +
+            '<div class="col-xs-4 eventBudget">20 000,-</div>' +
             '</div>' +
         '</div>' +
     '</div>' +
@@ -148,7 +162,34 @@ calendar.render = function() {
 }
 
 calendar.init = function() {
+
+    calendar.setView('main');
+
     calendar.render();
+
+    //Binds
+    $('#btnCalendarCreateNew').on('click', function(){
+        
+        calendar.setView('create-event');
+
+        $('#btnCalendarEventCreateSubmit').on('click', function(){
+
+             var payload = {
+                title: $('#calendarNewEventName').val(),
+                desc: $('#calendarNewEventDesc').val(),
+                sum: $('#calendarNewEventTarget').val(),
+                date: $('#calendarNewEventDate').val()
+            };
+
+            alert(JSON.stringify(payload));
+
+
+        });
+
+
+        //end createNew click
+    }); 
+
     //calendar.init
 }
 
@@ -164,3 +205,5 @@ calendar.getDaysInMonth = function(d) {
 
     //end .daysInMonth
 }
+
+

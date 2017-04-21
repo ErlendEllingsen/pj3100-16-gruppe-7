@@ -44,6 +44,41 @@ section[data-type="state"] {
     display: none;
 }
 
+/**
+GENERALS
+*/
+
+.appRowButton {
+    font-weight: bold;
+    padding: 10px;
+    border-bottom: 1px solid #d9d9d9;
+}
+
+.appConfirmButton {
+    background-color: #0C605E;
+    color: white;
+    width: 100%;
+    font-weight: bold;
+    border-radius: 3px;
+    border: 0px;
+    font-size: 16px;
+    padding: 8px;
+    margin-top: 15px;
+}
+
+.appAltActionButton {
+    background-color: #FFF;
+    color: #646464;
+    width: 100%;
+    font-weight: bold;
+    border-radius: 3px;
+    border: 1px solid #bdbdbd;
+    font-size: 16px;
+    margin-top: 5px;
+    padding: 8px;
+    margin-bottom: 10px;
+}
+
 /*
  * LOGIN  
  */
@@ -133,6 +168,10 @@ section[data-state="login"] div#pinDisplay div[data-type="entry-error"] {
     background-color: #fafafa;
 }
 
+.calendarDateBlockItem:first-child {
+    border-top: 0px;
+}
+
 .calendarDateBlockItem h3 {
     margin: 0px;
     padding: 0px; 
@@ -145,6 +184,20 @@ section[data-state="login"] div#pinDisplay div[data-type="entry-error"] {
     line-height: 35px;
     border-left: 1px solid #dfdfdf;
 }
+
+.eventFormRow {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+#calendarNewEventDate {
+    width: 100%;
+    max-width: 100%;
+    min-width: calc(100% - 15px);
+}
+
+
+
 
 /**
 SETTINGS
