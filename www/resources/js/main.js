@@ -251,6 +251,12 @@ main.loadedMethods.main = function () {
         main.accountData.freshData(data);
     });
 
+    //--- SET WINDOW HEIGHT ---
+    var mainSpaceFreeHeight = ($(window).height() - $('#header').height() - $('#tab_bar_spacer').height());
+    $('#loggedin-page').css('height', mainSpaceFreeHeight + 'px');
+    $('#loggedin-page').css('overflow-y', 'scroll');
+    $('#loggedin-page').css('overflow-x', 'hidden');
+
 
     //end loadedMethods.main
 }

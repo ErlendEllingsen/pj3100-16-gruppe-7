@@ -71,8 +71,16 @@ calendar.date.getBlock = function(i) {
 
     dateHasEvents = (main.accountData.dataCalendar.eventsByDate[searchDateStr] != undefined);
 
+    //Each dateblock contains a lot of (meta) information.
     return '' +
-    '<span class="calendarDateBlock" onclick="calendar.pickEvent(this);" data-fulldate="' + fullDate + '" data-year="' + calendar.d.year() + '" data-month="' + (calendar.d.month()+1) + '" data-date="' + i + '" data-hasEvents="' + (dateHasEvents ? 1 : 0) + '">' +
+    '<span class="calendarDateBlock" ' +
+        'onclick="calendar.pickEvent(this);" ' +
+        'data-fulldate-server="' + searchDateStr + '" ' +
+        'data-fulldate="' + fullDate + '" ' +
+        'data-year="' + calendar.d.year() + '" ' +
+        'data-month="' + (calendar.d.month()+1) + '" ' +
+        'data-date="' + i + '" ' +
+        'data-hasEvents="' + (dateHasEvents ? 1 : 0) + '">' +
         i +
         (dateHasEvents ? '<div class="dateHasEvents"></div>' : '') +
     '</span>';
@@ -84,17 +92,94 @@ calendar.event = {};
 
 calendar.event.getObject = function() {
     return ('' + 
-    '<div class="panel panel-default calendarDateBlockItem">' +
-        '<div class="row">' +
-            '<div class="col-xs-8">' +
-                '<h3>Coachella🎉☀️</h3>' +
-                'Trip to the US and Coachella' +
-            '</div>' +
-            '<div class="col-xs-4 eventBudget">20 000,-</div>' +
+    '<div>' + //Empty div surrounding content because we're using .html() (innerHTML)
+        '<div class="panel panel-default calendarDateBlockItem" data-event-uuid="N/A"  data-toggled="0">' +
+            '<div style="z-index: 1;" onclick="calendar.event.toggleMenu(this);" class="menuToggleActions"><span onclick="calendar.event.delete(event, this);"><i class="fa fa-trash"></i></span></div>' + 
+            '<div class="row" onclick="calendar.event.toggleMenu(this);" style="z-index: 0;">' +
+                '<div class="col-xs-8">' +
+                    '<h3>' +
+                        '<span class="eventItemTitle">N/A</span>' +
+                    '</h3>' +
+                    '<span class="eventItemDescription">N/A</span>' +
+                '</div>' +
+                '<div class="col-xs-4 eventBudget"><span class="eventItemBudget">N/A</span></div>' +
+                '</div>' +
             '</div>' +
         '</div>' +
     '</div>' +
     '');
+}
+
+calendar.event.delete = function(event, sender) {
+    event.stopImmediatePropagation();
+
+    var s = $(sender); 
+    var eventUuid = $(s).parent().parent().attr('data-event-uuid');
+
+    //--- SEND DELETE REQUEST ---
+    window.plugins.spinnerDialog.show();
+
+    tools.request({
+        url: config.endpoint + 'device/event/delete/' + eventUuid,
+        type: "GET",
+            
+    }, {
+        requireToken: false
+    }, function (data, headers) {
+        
+
+        //Check the server response 
+        if (data.status == false) {
+            navigator.notification.alert('An error occured.', function(){
+            }, 'Error');
+            window.plugins.spinnerDialog.hide();
+            return;    
+        }
+
+        //Response was ok.. Event has been deleted...
+        //Refresh account data...
+        main.accountData.freshData(data.client);
+
+        //Remove the sender list element item
+        $(s).parent().parent().remove();
+
+        //Re-render that shiiit (render the calendar)
+        calendar.render();
+
+        //Hide the spinner once calendar has rendered...
+        window.plugins.spinnerDialog.hide();
+
+    }, function(errObj){
+        window.plugins.spinnerDialog.hide();
+        navigator.notification.alert('An error occured.', function(){
+            }, 'Error');
+        return;
+    });
+
+    //end event.delete
+}
+
+calendar.event.toggleMenu = function(sender) {
+
+    var s = $(sender);
+
+    s = $(sender).parent(); //row is the child of .calendarDateBlockItem, onclick lies on row to allow other listeners to react first.
+
+    var isToggled = ($(s).attr('data-toggled') == 1);
+
+    if (!isToggled) {
+        //is not toggled.
+        $(s).find('.row').css('filter', 'blur(5px)');
+        $(s).find('.menuToggleActions').css('display', 'block');
+    } else {
+        //is toggled
+        $(s).find('.row').css('filter', 'none');
+        $(s).find('.menuToggleActions').css('display', 'none');
+    }
+
+    $(s).attr('data-toggled', (isToggled ? '0' : '1')); //Reverse current status
+
+    //end event.toggleMenu
 }
 
 calendar.previousMonth = function() {
@@ -133,7 +218,35 @@ calendar.pickEvent = function(sender) {
 
     //Events processing 
     if ($(s).attr('data-hasEvents') == 1) {
-        $('#calendarItemView').html(calendar.event.getObject());
+
+        $('#calendarItemView').html('');
+
+        var searchDateStr = $(s).attr('data-fulldate-server');
+        var events = main.accountData.dataCalendar.eventsByDate[searchDateStr];
+
+        //Loop through the events and add them to the list
+        for (var i = 0; i < events.length; i++) {
+            
+            var event = events[i]; 
+            var newEventObj = $(calendar.event.getObject());
+
+            //Set event data and bind to html object 
+            $(newEventObj).find('.calendarDateBlockItem').attr('data-event-uuid', event.uuid);
+
+            //Adjust object properties 
+            //eventItemTitle
+            //eventItemDescription
+            //eventItemBudget
+
+            $(newEventObj).find('.eventItemTitle').html(event.title);
+            $(newEventObj).find('.eventItemDescription').html(event.description);
+            $(newEventObj).find('.eventItemBudget').html(event.sum + ',-');
+
+            $('#calendarItemView').append($(newEventObj));
+        }
+
+
+        
     } else {
         $('#calendarItemView').html('');
     }
@@ -150,7 +263,7 @@ calendar.render = function() {
     var today = moment();
     var monthAndYearToday = (today.year() == calendar.d.year() && today.month() == calendar.d.month());
 
-    $('#calendarView').html('');
+    //Re-set contents
 
     var days = calendar.getDaysInMonth(calendar.d.toDate());
     
