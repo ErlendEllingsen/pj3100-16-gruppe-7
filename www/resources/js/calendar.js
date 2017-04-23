@@ -280,16 +280,20 @@ calendar.init = function() {
                 }
 
                 //Success! ... 
+                
+                //Update data to reflect changes....
+                main.accountData.freshData(data.client);
 
                 //Select the event on the main view
-                calendar.setView('main'); 
+                calendar.setView('main');
+                calendar.render();
 
                 //Format: YYYY.MM.DD
                 var fullDate = (dateAsMoment.year() + '.' + (dateAsMoment.month()+1) + '.' + dateAsMoment.date());
                 calendar.pickEvent($('#calendarView').find('.calendarDateBlock[data-fulldate="' + fullDate + '"]'));
                 console.log('Picking event... (' + fullDate + ')');
-                
-                main.accountData.freshData(data.client);
+
+                //All good..
                 
                 //end event submit ok 
             }, function(errObj){

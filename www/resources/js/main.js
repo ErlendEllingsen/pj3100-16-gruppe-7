@@ -273,6 +273,8 @@ main.accountData.freshData = function(data) {
     var add = ad.data; 
 
     //Calculate remainder for today.
+    console.log('Looking for object: ' + add.currentDate);
+
     var spent = add.finance.transactions[add.currentDate].sum;
     var remainder = add.finance.budgets.daily - spent;
     var percentage = Math.floor((remainder / add.finance.budgets.daily) * 100); //Calculate
