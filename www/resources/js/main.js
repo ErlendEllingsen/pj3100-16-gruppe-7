@@ -257,7 +257,13 @@ main.loadedMethods.main = function () {
 
 
 main.accountData = {
-    data: null
+    data: null,
+    dataCalendar: { //Processed contents
+        //Contents here is calculated in the freshData-method...
+        eventsByDate: {
+            //K: DATE, V: Array with events...  Example:   "23.04.2017": [ev1,ev2,....] 
+        }
+    }
 };
 main.accountData.freshData = function(data) {
 
@@ -299,6 +305,23 @@ main.accountData.freshData = function(data) {
 
     //Set name 
     $('#userFullName').html(add.name_first + ' ' + add.name_last);
+
+    //--- Process CALENDAR // Events --- 
+    var eventsByDate = {};
+
+    for (var i = 0; i < add.finance.events.length; i++) {
+
+        var event = add.finance.events[i]; 
+        if (eventsByDate[event.date_human] == undefined) {
+            eventsByDate[event.date_human] = [];
+        }
+
+        eventsByDate[event.date_human].push(event);
+
+        //end events-loop 
+    }
+
+    main.accountData.dataCalendar.eventsByDate = eventsByDate; //Overwrite 
 
     //--- Process savings ---
 

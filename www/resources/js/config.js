@@ -1,5 +1,5 @@
 var config = {
-    devmode: false,
+    devmode: true,
     token: '',
     endpoint: 'https://dnbsmart.jungleflake.com/api/'
 };
