@@ -67,7 +67,6 @@ calendar.date.getBlock = function(i) {
     searchDate = (searchDate >= 10 ? searchDate : '0' + searchDate);
 
     var searchDateStr = searchDate + '.' + searchMonth + '.' + searchYear;
-    console.log('DEV: searchDateStr: ' + searchDateStr);
 
     dateHasEvents = (main.accountData.dataCalendar.eventsByDate[searchDateStr] != undefined);
 

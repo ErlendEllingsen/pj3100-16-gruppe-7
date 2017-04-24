@@ -13,6 +13,8 @@ var Main = function () {
 
 var main = new Main();
 
+var ptr;
+
 main.init = {};
 
 
@@ -208,48 +210,18 @@ main.loadedMethods.main = function () {
         styleText: true
     });
 
-    var ptr = new PullToReload({
+    ptr = new PullToReload({
         'loading-content': '<span style="font-size: 11px;"><i class="fa fa-circle-o-notch fa-spin fa-3x fa-fw"></i></span>',
         'callback-loading': function () {
 
-            tools.request({
-                url: config.endpoint + 'device/fetch'
-            }, {
-                requireToken: true
-            }, function (data, headers) {
+            main.accountData.fetchData();
 
-                
-
-                setTimeout(function(){
-                    ptr.loadingEnd();
-                    main.accountData.freshData(data);
-                }, 500);
-
-                console.log(JSON.stringify(data));
-
-            }, function (errObj) {
-                
-                setTimeout(function(){
-                    ptr.loadingEnd();
-                    
-                }, 500);
-
-                console.log(JSON.stringify(errObj));
-            });
-
-
-
-        }
+            //end callback-loading
+        }   
     });
 
     //perform first loading
-    tools.request({
-            url: config.endpoint + 'device/fetch'
-    }, {
-        requireToken: true
-    }, function (data, headers) {
-        main.accountData.freshData(data);
-    });
+    main.accountData.fetchData();
 
     //--- SET WINDOW HEIGHT ---
     var mainSpaceFreeHeight = ($(window).height() - $('#header').height() - $('#tab_bar_spacer').height());
@@ -261,7 +233,6 @@ main.loadedMethods.main = function () {
     //end loadedMethods.main
 }
 
-
 main.accountData = {
     data: null,
     dataCalendar: { //Processed contents
@@ -271,6 +242,49 @@ main.accountData = {
         }
     }
 };
+
+main.accountData.fetchDataInterval = null;
+
+main.accountData.fetchData = function() {
+
+    console.log('--- Fetching data @ ' + new Date().toString() + ' ---');
+
+    //Set interval if not running.
+    if (main.accountData.fetchDataInterval == null) {
+        main.accountData.fetchDataInterval = setInterval(function(){
+            main.accountData.fetchData();
+        }, 2 * 60 * 1000) //mins * secs * milisecs
+    }
+
+    //--- Fetch new account data---
+    tools.request({
+        url: config.endpoint + 'device/fetch'
+    }, {
+        requireToken: true
+    }, function (data, headers) {
+
+        
+
+        setTimeout(function(){
+            ptr.loadingEnd();
+            main.accountData.freshData(data);
+        }, 500);
+
+        console.log(JSON.stringify(data));
+
+    }, function (errObj) {
+        
+        setTimeout(function(){
+            ptr.loadingEnd();
+            
+        }, 500);
+
+        console.log(JSON.stringify(errObj));
+    });
+
+    //end accountData.fetchData
+}
+
 main.accountData.freshData = function(data) {
 
     main.accountData.data = data;
