@@ -314,6 +314,9 @@ calendar.render = function() {
 
 calendar.init = function() {
 
+    //Reset values that might be changed...
+    calendar.date.currentSelectDate = null; 
+
     calendar.setView('main');
 
     calendar.render();
