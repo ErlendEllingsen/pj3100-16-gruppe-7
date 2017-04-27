@@ -292,12 +292,23 @@ main.accountData.freshData = function(data) {
     var ad = main.accountData;
     var add = ad.data; 
 
+
+    //If calculated result is UNDEFINED or NULL, set to daily.
+    if (add.finance.budgets.daily_post_calculation === undefined || add.finance.budgets.daily_post_calculation === null) {
+        add.finance.budgets.daily_post_calculation = add.finance.budgets.daily;
+    }
+    
+
+
     //Calculate remainder for today.
     console.log('Looking for object: ' + add.currentDate);
 
     var spent = add.finance.transactions[add.currentDate].sum;
-    var remainder = add.finance.budgets.daily - spent;
-    var percentage = Math.floor((remainder / add.finance.budgets.daily) * 100); //Calculate
+
+    //daily_post_calculation instead of "daily", because we want to take in accounting saving goals.
+
+    var remainder = add.finance.budgets.daily_post_calculation - spent;
+    var percentage = Math.floor((remainder / add.finance.budgets.daily_post_calculation) * 100); //Calculate
 
     //Calculate circle values.
     var myCircle = Circles.create({
@@ -322,7 +333,7 @@ main.accountData.freshData = function(data) {
     });
 
     //Adjust numbers
-    $('#daily-budget').html(add.finance.budgets.daily + 'kr');
+    $('#daily-budget').html(add.finance.budgets.daily_post_calculation + 'kr');
     $('#saldo').html(add.finance.accounts.default + 'kr');
 
     //Set name 
@@ -368,11 +379,10 @@ main.loadedMethods.savings = function () {
         '    <div class="panel-heading">' +
         '        <h3 style="padding: 0px; margin: 0px;">' + prop + '</h3>' +
         '    </div>' +
-        '    <div class="panel-body">' +
+        '    <div class="panel-body" style="padding: 0px;">' +
         '        <div class="row" style="font-size: 20px;">' +
-        '            <div class="col-xs-5" style="text-align: center; color: rgb(27, 140, 139)">' + account.balance + '</div>' +
-        '            <div class="col-xs-2" style=" text-align: center; color: black;">/</div>' +
-        '            <div class="col-xs-5" style="text-align: center; color: gray">' + account.goal + '</div>' +
+        '            <div class="col-xs-6" style="text-align: center; color: rgb(27, 140, 139); padding: 15px;">' + account.balance + '</div>' +
+        '            <div class="col-xs-6" style="text-align: center; color: gray; border-left: 1px solid #d5d5d5; padding: 15px;">' + account.goal + '</div>' +
         '        </div>' +
         '    </div>' +
         '</div>' + 
